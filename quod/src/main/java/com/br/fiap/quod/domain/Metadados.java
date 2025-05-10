@@ -1,24 +1,9 @@
 package com.br.fiap.quod.domain;
 
 import com.br.fiap.quod.dto.MetadadosDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.*;
-
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-
 
 public class Metadados {
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private double latitude;
     private double longitude;
     private String ipOrigem;
@@ -27,6 +12,7 @@ public class Metadados {
     private int largura;
     private int dpi;
 
+    public Metadados() {}
 
     public Metadados(MetadadosDTO dto) {
         this.latitude = dto.latitude();
@@ -34,5 +20,24 @@ public class Metadados {
         this.ipOrigem = dto.ipOrigem();
     }
 
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
 
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
+
+    public String getIpOrigem() { return ipOrigem; }
+    public void setIpOrigem(String ipOrigem) { this.ipOrigem = ipOrigem; }
+
+    public String getFormato() { return formato; }
+    public void setFormato(String formato) { this.formato = formato; }
+
+    public int getAltura() { return altura; }
+    public void setAltura(int altura) { this.altura = altura; }
+
+    public int getLargura() { return largura; }
+    public void setLargura(int largura) { this.largura = largura; }
+
+    public int getDpi() { return dpi; }
+    public void setDpi(int dpi) { this.dpi = dpi; }
 }

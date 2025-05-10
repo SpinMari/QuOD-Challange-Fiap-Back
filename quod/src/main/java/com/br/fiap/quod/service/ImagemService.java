@@ -6,6 +6,7 @@ import com.br.fiap.quod.domain.Metadados;
 import com.br.fiap.quod.dto.request.ImagemUploadRequestDTO;
 import com.br.fiap.quod.dto.response.ImagemUploadResponseDTO;
 import com.br.fiap.quod.repository.ImagemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -15,12 +16,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class ImagemService {
 
-    private final ImagemRepository imagemRepository;
+
+    @Autowired
+    private ImagemRepository imagemRepository;
 
     public ImagemService(ImagemRepository imagemRepository) {
         this.imagemRepository = imagemRepository;
@@ -81,9 +85,11 @@ public class ImagemService {
         imagem.setFilename(imagePath);
         imagem.setTipoBiometria(request.tipoBiometria());
         imagem.setFraudeDetectada(fraudeDetectada);
-        imagem.setDataCaptura(request.dataCaptura() != null
-                ? LocalDateTime.parse(request.dataCaptura())
-                : LocalDateTime.now());
+        imagem.setDataCaptura(
+                request.dataCaptura() != null
+                        ? LocalDateTime.parse(request.dataCaptura())
+                        : LocalDateTime.now()
+        );
 
         if (request.dispositivo() != null)
             imagem.setDispositivo(new Dispositivo(request.dispositivo()));
@@ -92,5 +98,10 @@ public class ImagemService {
             imagem.setMetadados(new Metadados(request.metadados()));
 
         return imagem;
+    }
+
+    public void deletarImagensAntigas(LocalDateTime data) {
+        List<Imagem> antigas = imagemRepository.findByDataCapturaBefore(data);
+        imagemRepository.deleteAll(antigas);
     }
 }

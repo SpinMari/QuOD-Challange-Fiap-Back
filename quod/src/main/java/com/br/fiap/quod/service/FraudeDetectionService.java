@@ -43,6 +43,7 @@ public class FraudeDetectionService {
             return true;
         }
 
+
         // 4. If all checks passed, return no fraud detected
         return false;
     }

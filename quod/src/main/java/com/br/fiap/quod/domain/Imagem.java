@@ -1,37 +1,55 @@
 package com.br.fiap.quod.domain;
 
-import com.br.fiap.quod.dto.request.ImagemUploadRequestDTO;
-import jakarta.persistence.*;
-import lombok.*;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-
+@Document(collection = "imagens")
 public class Imagem {
 
     @Id
-    @GeneratedValue
     private String id;
     private String filename;
     private String tipoBiometria;
     private LocalDateTime dataCaptura;
-
-    //itens comentados, pois precisa vere se serao manytoone ou oque
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "dispositivo_id")
-    private Dispositivo dispositivo;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "metadados_id")
-    private Metadados metadados;
     private boolean fraudeDetectada;
 
+    private Dispositivo dispositivo;
+    private Metadados metadados;
 
+    public Imagem() {}
 
+    public Imagem(String filename, String tipoBiometria, LocalDateTime dataCaptura, boolean fraudeDetectada,
+                  Dispositivo dispositivo, Metadados metadados) {
+        this.filename = filename;
+        this.tipoBiometria = tipoBiometria;
+        this.dataCaptura = dataCaptura;
+        this.fraudeDetectada = fraudeDetectada;
+        this.dispositivo = dispositivo;
+        this.metadados = metadados;
+    }
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getFilename() { return filename; }
+    public void setFilename(String filename) { this.filename = filename; }
+
+    public String getTipoBiometria() { return tipoBiometria; }
+    public void setTipoBiometria(String tipoBiometria) { this.tipoBiometria = tipoBiometria; }
+
+    public LocalDateTime getDataCaptura() { return dataCaptura; }
+    public void setDataCaptura(LocalDateTime dataCaptura) { this.dataCaptura = dataCaptura; }
+
+    public boolean isFraudeDetectada() { return fraudeDetectada; }
+    public void setFraudeDetectada(boolean fraudeDetectada) { this.fraudeDetectada = fraudeDetectada; }
+
+    public Dispositivo getDispositivo() { return dispositivo; }
+    public void setDispositivo(Dispositivo dispositivo) { this.dispositivo = dispositivo; }
+
+    public Metadados getMetadados() { return metadados; }
+    public void setMetadados(Metadados metadados) { this.metadados = metadados; }
 }

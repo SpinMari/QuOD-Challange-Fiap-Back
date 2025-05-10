@@ -2,8 +2,6 @@ package com.br.fiap.quod.controller;
 
 import com.br.fiap.quod.dto.DispositivoDTO;
 import com.br.fiap.quod.service.DispositivoService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,37 +13,27 @@ public class DispositivoController {
 
     private final DispositivoService dispositivoService;
 
-    @Autowired
     public DispositivoController(DispositivoService dispositivoService) {
         this.dispositivoService = dispositivoService;
     }
 
-    @PostMapping
-    public ResponseEntity<DispositivoDTO> createDispositivo(@Valid @RequestBody DispositivoDTO dispositivoDTO) {
-        DispositivoDTO created = dispositivoService.createDispositivo(dispositivoDTO);
-        return ResponseEntity.ok(created);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<DispositivoDTO> getDispositivo(@PathVariable Long id) {
-        return ResponseEntity.ok(dispositivoService.getDispositivo(id));
-    }
-
     @GetMapping
     public ResponseEntity<List<DispositivoDTO>> getAllDispositivos() {
-        return ResponseEntity.ok(dispositivoService.getAllDispositivos());
+        return ResponseEntity.ok(dispositivoService.getAll());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DispositivoDTO> updateDispositivo(@PathVariable Long id,
-                                                            @Valid @RequestBody DispositivoDTO dispositivoDTO) {
-        DispositivoDTO updated = dispositivoService.updateDispositivo(id, dispositivoDTO);
-        return ResponseEntity.ok(updated);
+    @GetMapping("/modelo/{modelo}")
+    public ResponseEntity<DispositivoDTO> getByModelo(@PathVariable String modelo) {
+        return ResponseEntity.ok(dispositivoService.getByModelo(modelo));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDispositivo(@PathVariable Long id) {
-        dispositivoService.deleteDispositivo(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/fabricante/{fabricante}")
+    public ResponseEntity<List<DispositivoDTO>> getByFabricante(@PathVariable String fabricante) {
+        return ResponseEntity.ok(dispositivoService.getByFabricante(fabricante));
+    }
+
+    @GetMapping("/fabricante/{fabricante}/modelo/{modelo}")
+    public ResponseEntity<List<DispositivoDTO>> getByFabricanteAndModelo(@PathVariable String fabricante, @PathVariable String modelo) {
+        return ResponseEntity.ok(dispositivoService.getByFabricanteAndModelo(fabricante, modelo));
     }
 }

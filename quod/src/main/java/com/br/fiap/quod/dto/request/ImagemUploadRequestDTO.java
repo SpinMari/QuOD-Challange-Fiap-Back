@@ -24,13 +24,5 @@ public record ImagemUploadRequestDTO(
         this.metadados = metadados;
     }
 
-    public ImagemUploadRequestDTO(Imagem imagemUpload) {
-        this(
-                imagemUpload.getFilename(),
-                imagemUpload.getTipoBiometria(),
-                imagemUpload.getDataCaptura() != null ? imagemUpload.getDataCaptura().toString() : null,
-                imagemUpload.getDispositivo() != null ? new DispositivoDTO(imagemUpload.getDispositivo()) : null,
-                imagemUpload.getMetadados() != null ? new MetadadosDTO(imagemUpload.getMetadados()) : null
-        );
-    }
+
 }

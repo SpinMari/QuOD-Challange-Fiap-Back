@@ -5,9 +5,5 @@ public record ImagemUploadResponseDTO(
         String tipoBiometria,
         boolean fraudeDetectada
 ) {
-    public ImagemUploadResponseDTO(String imageId, String tipoBiometria, boolean fraudeDetectada) {
-        this.imageId = imageId;
-        this.tipoBiometria = tipoBiometria;
-        this.fraudeDetectada = fraudeDetectada;
-    }
+
 }
